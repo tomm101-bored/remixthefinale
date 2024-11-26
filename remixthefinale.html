@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #141414;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      flex-direction: column;
+    }
+    .timer-container {
+      text-align: center;
+    }
+    .timer-image {
+      margin-bottom: 20px;
+    }
+    .timer-image img {
+      width: 300px; /* Adjust the size as needed */
+    }
+    .timer {
+      font-size: 3rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      background: linear-gradient(to right, #ff007a, #ffcf33);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="timer-container">
+    <div class="timer-image">
+      <img src="https://yt3.ggpht.com/csG48uSybm2WznEbMza69ixN3jXM1TQs7xohTaJeaUlX0CpM1FCZG2oBwAroXY6recyMHlOXj_PRO9A=s640-rw-nd-v1" alt="Countdown">
+    </div>
+    <div class="timer" id="timer">00:00:00:00</div>
+  </div>
+
+  <script>
+    function startCountdown(targetDate) {
+      const timerElement = document.getElementById("timer");
+
+      function updateTimer() {
+        const now = new Date();
+        const timeRemaining = targetDate - now;
+
+        if (timeRemaining <= 0) {
+          timerElement.textContent = "00:00:00:00";
+          clearInterval(interval);
+          return;
+        }
+
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        timerElement.textContent = `${String(days).padStart(2, "0")}:${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      }
+
+      const interval = setInterval(updateTimer, 1000);
+      updateTimer(); // Initial call to display timer immediately
+    }
+
+    // Set the target date and time for November 30, 8 PM in the user's timezone
+    const targetDate = new Date();
+    targetDate.setFullYear(2024, 10, 30); // November is month 10 in JS (0-indexed)
+    targetDate.setHours(20, 0, 0, 0); // 8 PM
+
+    startCountdown(targetDate);
+  </script>
+</body>
+</html>
